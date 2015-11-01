@@ -1,25 +1,23 @@
-#from random import randint
 import random
-#import time
 
-tamanhos=[]
+tamanhos=[] #tamanho dos barcos
 
+file = "Battleship_tamanhos.txt"  #arquivo a ser importado
+abrir = open(file,encoding="utf-8",mode="r") #abre o arquivo
+ler = abrir.readlines() #le linha por linha do arquivo
 
-file = "Battleship_tamanhos.txt"
-abrir = open(file,encoding="utf-8",mode="r")
-ler = abrir.readlines()
+abrir.close() #fecha o arquivo importado
+#print (abrir.closed)
 
-#tamanhos =[1,2,3]
-
-
-for i in ler:
+for i in ler: #loop pelo aruivo importado para ler todas as linhas
     x = i.strip()
     if ler != "":
         tamanhos.append(int(x))
 
 board = [] #cria um tabuleiro
 
-print(tamanhos)
+#print(tamanhos)
+
 for x in range(6): #define o tamanho do tabuleiro
     board.append(["/"] * 6)
 
@@ -27,11 +25,11 @@ def print_board(board): #elimina aspas do tabuleiro
     for row in board:
         print (" ".join(row))
 
-print ("Almirante, vamos afundar navios!")
+print ("Almirante, vamos afundar navios!\n" "Escolha valores entre 0 e %s" %(len(board)-1))
 
 print_board(board)
 
-def posnav(nav):
+def posnav(nav): #funcao que define a posicao dos navios
     i=0
     col = 0
     lin = 0
@@ -42,7 +40,9 @@ def posnav(nav):
     if i== 0:
         col =random.randint(0,5) # randomiza a coluna do navio
         lin =random.randint(0,6-nav) # randomiza a posição inicial da linha referente ao tamanho do navio
-        #vertical
+        
+        '''vertical'''
+
         a = (lin,col) # para navios de tamanho 1
         if nav >1: # para navios de tamanho 2
             b=(lin+1,col)
@@ -53,7 +53,7 @@ def posnav(nav):
         lin =random.randint(0,5) # randomiza uma linha para o navios
         col =random.randint(0,6-nav) # randomiza a posição inicial do navio em uma coluna referente 
         
-        #horizontal
+        '''horizontal'''
       
         a = (lin,col) # para navios com tamanho 1
         if nav >1: # para navios com tamanho 2
@@ -76,7 +76,7 @@ test=0
 rodada = 0 #conta as rodadas
 
 while True:
-    #print("Voce ja acertou:",contax)
+    print("Voce ja acertou:",contax)
     print("Voce ja errou:",contam)
     print("Pontos:", contador_pontos)    
     #print(subm)
@@ -106,9 +106,9 @@ while True:
         
         board[guess_row][guess_col] = "X" # verifica se o jogador acertou o navio
         print ("Parabens, vc acertou um navio!")
-        contax += 1 # conta o numero de acertos
+              
         contador_pontos += len(i)
-        
+        contax += 1*contador_pontos # conta o numero de acertos  
         
     
     if board[guess_row][guess_col] == "X":
@@ -122,7 +122,7 @@ while True:
 
         elif (board[guess_row][guess_col] == "X") or (board[guess_row][guess_col] == "O"): # verifica se o jogador já escolheu uma posição
             print ("Voce já escolheu está posição!")
-            #2contax -= 1
+            
             
         else: # verifica se o jogador errou a posição do navio
             print ("Voce errou!")
